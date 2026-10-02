@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>آرمان | پنل مدیریت حرفه‌ای</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<div class="app">
+<aside id="side">
+ <div class="logo"><i>✦</i><div>آرمان<small>پنل مدیریت فروش</small></div></div>
+ <nav class="nav" id="nav"></nav>
+ <div class="pro"><b>نسخه حرفه‌ای</b>گزارش‌های پیشرفته و دسترسی تیمی را فعال کنید.<button data-t="درخواست ارتقا ثبت شد">ارتقا حساب</button></div>
+</aside>
+<main>
+<header>
+ <button class="ib" id="menu" aria-label="منو">☰</button>
+ <h1 id="title">داشبورد</h1>
+ <button class="kb" id="ks">🔍 جستجو و دستورها <kbd>Ctrl K</kbd></button>
+ <button class="ib" id="th" aria-label="تغییر پوسته">🌗</button>
+ <button class="ib" id="bell" aria-label="اعلان‌ها">🔔<em></em>
+  <div class="dd" id="dd"><div><b>🛒</b><p>سفارش جدید #۱۰۴۸<small>۲ دقیقه پیش</small></p></div><div><b>⚠️</b><p>موجودی قهوه‌ساز رو به پایان است<small>۱ ساعت پیش</small></p></div><div><b>💬</b><p>پیام جدید از سارا کریمی<small>۳ ساعت پیش</small></p></div></div></button>
+ <div class="me"><div class="av">م</div><div><b>مریم احمدی</b><small>مدیر کل</small></div></div>
+</header>
+
+<section class="page on" id="dash">
+ <div class="hero"><div><h2>سلام مریم، امروز عالی شروع کردی 👋</h2><p>فروش امروز نسبت به دیروز ۱۲٪ رشد داشته و ۲۴ سفارش منتظر بررسی است.</p></div>
+  <div class="bt"><button class="btn w" data-go="orders">بررسی سفارش‌ها</button><button class="btn g" id="exp0">دریافت گزارش</button></div></div>
+ <div class="grid kpis" id="kpis"></div>
+ <div class="grid row2">
+  <div class="card"><div class="hd"><div><h3>درآمد و هزینه</h3><div class="lgd"><span><i style="background:var(--pri)"></i>درآمد</span><span><i style="background:var(--mint)"></i>سود</span></div></div>
+   <div class="seg" id="rg"><button class="on" data-r="w">هفته</button><button data-r="m">ماه</button><button data-r="y">سال</button></div></div>
+   <div class="chw"><svg id="ch" viewBox="0 0 700 270" width="100%" role="img" aria-label="نمودار درآمد"></svg><div id="tip"></div></div></div>
+  <div class="card"><div class="hd"><h3>هدف فروش ماه</h3></div><div class="ring" style="background:conic-gradient(var(--pri) 0 78%,var(--sf2) 0)"><div>۷۸٪<small>از ۵۰۰ میلیون</small></div></div>
+   <div class="pb"><p><span>لوازم دیجیتال</span><b>۴۲٪</b></p><div><i style="width:42%"></i></div></div>
+   <div class="pb"><p><span>پوشاک</span><b>۲۶٪</b></p><div><i style="width:26%"></i></div></div>
+   <div class="pb"><p><span>خانه و آشپزخانه</span><b>۱۹٪</b></p><div><i style="width:19%"></i></div></div></div>
+ </div>
+ <div class="grid row2" style="grid-template-columns:1.8fr 1fr">
+  <div class="card"><div class="hd"><h3>آخرین سفارش‌ها</h3><button class="btn o" data-go="orders">مشاهده همه</button></div><div class="tw"><table><thead><tr><th>کد</th><th>مشتری</th><th>مبلغ (تومان)</th><th>وضعیت</th></tr></thead><tbody id="rec"></tbody></table></div></div>
+  <div class="card"><div class="hd"><h3>فعالیت‌های اخیر</h3></div><div class="tl" id="tl"></div></div>
+ </div>
+</section>
+
+<section class="page" id="orders"><div class="card">
+ <div class="hd"><h3>مدیریت سفارش‌ها</h3><div class="tools"><input class="in" id="q" placeholder="جستجوی مشتری یا کد…" aria-label="جستجو"><select id="f" aria-label="وضعیت"><option value="">همه وضعیت‌ها</option><option>تکمیل‌شده</option><option>در انتظار</option><option>ارسال‌شده</option><option>لغوشده</option></select><button class="btn o" id="csv">خروجی CSV</button><button class="btn" id="add">+ سفارش جدید</button></div></div>
+ <div class="tw"><table><thead><tr><th data-k="0">کد ↕</th><th data-k="1">مشتری ↕</th><th data-k="2">تاریخ ↕</th><th data-k="3">مبلغ (تومان) ↕</th><th data-k="4">وضعیت ↕</th></tr></thead><tbody id="ot"></tbody></table></div>
+ <div class="pager"><span id="pi"></span><div id="pg"></div></div></div></section>
+
+<section class="page" id="cust"><div class="grid cg" id="cg"></div></section>
+<section class="page" id="prod"><div class="grid cg" id="pd"></div></section>
+<section class="page" id="task"><div class="grid kan" id="kn"></div></section>
+
+<section class="page" id="ana"></section>
+<section class="page" id="inv"></section>
+<section class="page" id="cpn"></section>
+<section class="page" id="msg"></section>
+<section class="page" id="rev"></section>
+<section class="page" id="cal"></section>
+<section class="page" id="team"></section>
+<section class="page" id="set"><div class="card set"><h3 style="margin-bottom:16px">تنظیمات</h3>
+ <label>نام فروشگاه<input class="in" value="فروشگاه آرمان"></label>
+ <label>ایمیل پشتیبانی<input class="in" dir="ltr" value="support@arman.ir"></label>
+ <div class="rw"><span>رنگ اصلی پنل</span><div class="sws" id="sws"></div></div>
+ <div class="rw"><span>اعلان سفارش جدید</span><input type="checkbox" class="sw" checked></div>
+ <div class="rw"><span>گزارش هفتگی با ایمیل</span><input type="checkbox" class="sw"></div>
+ <div class="rw"><span>پوسته تیره</span><input type="checkbox" class="sw" id="dk" checked></div>
+ <button class="btn" style="margin-top:18px" data-t="تغییرات ذخیره شد">ذخیره تغییرات</button></div></section>
+</main></div>
+
+<div id="lg"><div class="lbox"><div class="logo" style="justify-content:center"><i>✦</i><div>آرمان<small>پنل مدیریت فروش</small></div></div>
+ <h2>ورود به پنل مدیریت</h2><p style="color:var(--mut);margin-bottom:16px">برای ادامه اطلاعات حساب خود را وارد کنید.</p>
+ <label>ایمیل<input class="in" dir="ltr" value="admin@arman.ir"></label><br>
+ <label>رمز عبور<input class="in" dir="ltr" type="password" value="12345678"></label>
+ <div class="rw" style="border:0"><span>مرا به خاطر بسپار</span><input type="checkbox" class="sw" checked></div>
+ <button class="btn" id="lgb" style="width:100%;padding:12px">ورود به پنل</button></div></div>
+<div class="ov" id="ov"></div>
+<div class="mod cmd" id="cm"><input class="in" id="ci" placeholder="به کجا برویم یا چه کاری انجام دهیم؟" aria-label="دستور"><div id="cl" style="margin-top:10px"></div></div>
+<div class="mod" id="nm"><h3 style="margin-bottom:14px">ثبت سفارش جدید</h3>
+ <label>نام مشتری<input class="in" id="nn" placeholder="مثلاً رضا محمدی"></label><br>
+ <label>مبلغ (تومان)<input class="in" id="na" type="number" min="0" placeholder="1500000"></label><br>
+ <div style="display:flex;gap:8px"><button class="btn" id="ns">ثبت سفارش</button><button class="btn o" data-x>انصراف</button></div></div>
+<div class="dr" id="dr"></div>
+<div id="toast" role="status"></div>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>

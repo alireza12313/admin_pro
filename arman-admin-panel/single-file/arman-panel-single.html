@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>آرمان | پنل مدیریت حرفه‌ای</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--pri:#7c6cff;--mint:#2ee6a6;--cor:#ff6b81;--sun:#ffc24b;--r:18px}
+[data-theme=dark]{--bg:#080b18;--sf:#0f1428;--sf2:#151b36;--ink:#eef0ff;--mut:#8a91b8;--ln:#222a4d;--gl:rgba(21,27,54,.7)}
+[data-theme=light]{--bg:#f2f3fb;--sf:#fff;--sf2:#f6f7fd;--ink:#14173a;--mut:#6a6f98;--ln:#e3e5f4;--gl:rgba(255,255,255,.8)}
+*{box-sizing:border-box;margin:0}
+body{font-family:Vazirmatn,Tahoma,sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.7;background-image:radial-gradient(60rem 30rem at 85% -10%,color-mix(in srgb,var(--pri) 22%,transparent),transparent),radial-gradient(40rem 25rem at 0 110%,color-mix(in srgb,var(--mint) 10%,transparent),transparent);background-attachment:fixed}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--sun);outline-offset:2px}
+.app{display:grid;grid-template-columns:268px 1fr;min-height:100vh}
+aside{position:sticky;top:0;height:100vh;padding:20px 14px;background:var(--gl);backdrop-filter:blur(14px);border-left:1px solid var(--ln);display:flex;flex-direction:column;gap:4px;z-index:30;overflow:auto}
+.logo{display:flex;align-items:center;gap:12px;font-weight:900;font-size:20px;padding:4px 10px 18px}
+.logo i{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,var(--pri),var(--mint));display:grid;place-items:center;font-style:normal;box-shadow:0 8px 24px color-mix(in srgb,var(--pri) 50%,transparent)}
+.logo small{display:block;font-size:11px;font-weight:400;color:var(--mut);line-height:1}
+.grp{color:var(--mut);font-size:12px;padding:14px 12px 4px}
+.nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;color:var(--mut);cursor:pointer;transition:.15s;font-weight:500}
+.nav a:hover{background:var(--sf2);color:var(--ink)}
+.nav a.on{background:linear-gradient(270deg,color-mix(in srgb,var(--pri) 85%,#000),var(--pri));color:#fff;box-shadow:0 8px 20px color-mix(in srgb,var(--pri) 35%,transparent)}
+.nav b{width:22px;text-align:center;font-weight:400}
+.nav em{margin-right:auto;background:var(--cor);color:#fff;font-style:normal;font-size:11px;padding:0 8px;border-radius:20px}
+.pro{margin-top:auto;border-radius:16px;padding:16px;background:linear-gradient(140deg,var(--pri),#3b2fb8);color:#fff;font-size:13px}
+.pro b{display:block;font-size:15px}.pro button{margin-top:10px;width:100%;border:0;border-radius:10px;padding:7px;background:#fff;color:#2a1f8f;font-weight:800;cursor:pointer}
+main{padding:0 30px 50px;min-width:0}
+header{display:flex;align-items:center;gap:10px;padding:18px 0;position:sticky;top:0;z-index:20;background:linear-gradient(var(--bg) 70%,transparent)}
+header h1{font-size:22px;font-weight:900;flex:1}
+.ib,.kb{background:var(--sf);border:1px solid var(--ln);border-radius:13px;height:42px;min-width:42px;cursor:pointer;position:relative;transition:.15s}
+.ib:hover,.kb:hover{border-color:var(--pri)}
+.kb{padding:0 14px;color:var(--mut);display:flex;align-items:center;gap:10px;width:230px}
+.kb kbd{margin-right:auto;font-size:11px;border:1px solid var(--ln);border-radius:6px;padding:0 6px}
+.ib em{position:absolute;top:8px;left:10px;width:9px;height:9px;border-radius:50%;background:var(--cor);box-shadow:0 0 0 3px var(--sf)}
+.av{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--sun),var(--cor));display:grid;place-items:center;font-weight:900;color:#3a1500}
+.me{display:flex;gap:10px;align-items:center}.me small{display:block;color:var(--mut);font-size:12px;line-height:1.2}
+#menu{display:none}
+.dd{position:absolute;top:50px;left:0;width:320px;background:var(--sf);border:1px solid var(--ln);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.35);padding:8px;display:none;text-align:right;z-index:40;cursor:default}
+.dd.on{display:block}.dd div{padding:10px;border-radius:10px;display:flex;gap:10px}.dd div:hover{background:var(--sf2)}.dd small{color:var(--mut);display:block}
+.page{display:none}.page.on{display:block;animation:in .3s}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+@media(prefers-reduced-motion:reduce){.page.on{animation:none}}
+.grid{display:grid;gap:16px}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:var(--r);padding:20px}
+.hero{position:relative;overflow:hidden;border-radius:24px;padding:28px 30px;background:linear-gradient(120deg,var(--pri),#3a2ec2 60%,#142a8a);color:#fff;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:16px}
+.hero:before{content:"";position:absolute;left:-60px;top:-80px;width:280px;height:280px;border-radius:50%;background:radial-gradient(var(--mint),transparent 70%);opacity:.45}
+.hero h2{font-size:24px;font-weight:900;position:relative}.hero p{opacity:.85;position:relative}
+.hero .bt{position:relative;display:flex;gap:10px}
+.btn{border:0;border-radius:12px;padding:9px 18px;cursor:pointer;font-weight:700;background:var(--pri);color:#fff;transition:.15s}
+.btn:hover{filter:brightness(1.12)}.btn.w{background:#fff;color:#2a1f8f}.btn.g{background:rgba(255,255,255,.18);color:#fff}
+.btn.o{background:var(--sf2);color:var(--ink);border:1px solid var(--ln)}
+.kpis{grid-template-columns:repeat(4,1fr)}
+.kpi{position:relative;overflow:hidden}.kpi span{color:var(--mut)}
+.kpi strong{display:block;font-size:28px;font-weight:900;margin:0}
+.kpi svg{position:absolute;left:0;bottom:0;width:55%;height:50px;opacity:.9}
+.up{color:var(--mint)}.dn{color:var(--cor)}
+.row2{grid-template-columns:1.8fr 1fr;margin-top:16px}.row3{grid-template-columns:1fr 1fr 1fr;margin-top:16px}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}.hd h3{font-size:16px;font-weight:800}
+.seg{display:flex;background:var(--sf2);padding:3px;border-radius:11px}.seg button{border:0;background:none;padding:3px 14px;border-radius:9px;cursor:pointer;color:var(--mut)}.seg .on{background:var(--pri);color:#fff;font-weight:700}
+svg text{fill:var(--mut);font-size:11px;font-family:inherit}
+.chw{position:relative}#tip{position:absolute;pointer-events:none;background:var(--sf2);border:1px solid var(--ln);border-radius:10px;padding:6px 12px;font-size:12px;opacity:0;transition:opacity .1s;white-space:nowrap}
+.lgd{display:flex;gap:16px;color:var(--mut)}.lgd i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-left:6px}
+.ring{width:150px;height:150px;margin:0 auto;border-radius:50%;display:grid;place-items:center}.ring div{width:114px;height:114px;border-radius:50%;background:var(--sf);display:grid;place-items:center;text-align:center;font-weight:900;font-size:26px;line-height:1.2}.ring small{display:block;font-size:12px;color:var(--mut);font-weight:400}
+.pb{margin:12px 0}.pb p{display:flex;justify-content:space-between}.pb div{height:8px;background:var(--sf2);border-radius:8px;overflow:hidden;margin-top:4px}.pb i{display:block;height:100%;border-radius:8px;background:linear-gradient(270deg,var(--pri),var(--mint))}
+.tl div{display:flex;gap:12px;padding:9px 0}.tl i{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-style:normal;flex:none;background:var(--sf2)}.tl small{color:var(--mut);display:block}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:640px}
+th{text-align:right;color:var(--mut);font-weight:500;padding:10px 12px;border-bottom:1px solid var(--ln);white-space:nowrap;cursor:pointer;user-select:none}th:hover{color:var(--ink)}
+td{padding:12px;border-bottom:1px solid var(--ln)}tr:last-child td{border:0}tbody tr{cursor:pointer}tbody tr:hover{background:var(--sf2)}
+.tag{padding:2px 12px;border-radius:20px;font-size:12px;font-weight:700;white-space:nowrap}
+.s1{background:color-mix(in srgb,var(--mint) 16%,transparent);color:var(--mint)}.s2{background:color-mix(in srgb,var(--sun) 16%,transparent);color:var(--sun)}.s3{background:color-mix(in srgb,var(--cor) 16%,transparent);color:var(--cor)}.s4{background:color-mix(in srgb,var(--pri) 18%,transparent);color:var(--pri)}
+.in,select{background:var(--sf2);border:1px solid var(--ln);border-radius:12px;padding:8px 14px;width:100%}
+.tools{display:flex;gap:8px;flex-wrap:wrap}.tools .in{width:220px}.tools select{width:auto}
+.pager{display:flex;justify-content:space-between;align-items:center;margin-top:14px;color:var(--mut)}.pager div{display:flex;gap:6px}.pager button{border:1px solid var(--ln);background:var(--sf2);border-radius:10px;min-width:36px;height:36px;cursor:pointer}.pager .on{background:var(--pri);color:#fff;border-color:var(--pri)}
+.cg{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}.cc{text-align:center}.cc .av{margin:0 auto 10px;width:64px;height:64px;font-size:24px;border-radius:20px}.cc p{color:var(--mut)}
+.cc dl{display:flex;justify-content:space-around;margin-top:12px;padding-top:12px;border-top:1px solid var(--ln)}.cc dt{font-weight:900}.cc dd{color:var(--mut);font-size:12px}
+.pimg{height:120px;border-radius:14px;display:grid;place-items:center;font-size:46px;margin-bottom:12px}
+.kan{grid-template-columns:repeat(3,1fr)}.kan h4{margin-bottom:10px}.tk{background:var(--sf2);border:1px solid var(--ln);border-radius:12px;padding:10px 12px;margin-bottom:8px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.tk button{border:0;background:var(--pri);color:#fff;border-radius:8px;width:28px;height:28px;cursor:pointer}
+.set{max-width:680px}.set label{display:grid;gap:4px;margin-bottom:14px;font-weight:500}
+.rw{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--ln)}
+.sw{appearance:none;width:44px;height:25px;border-radius:25px;background:var(--ln);position:relative;cursor:pointer;transition:.2s}.sw:after{content:"";position:absolute;top:3px;right:3px;width:19px;height:19px;border-radius:50%;background:#fff;transition:.2s}.sw:checked{background:var(--pri)}.sw:checked:after{right:22px}
+.sws{display:flex;gap:10px}.sws button{width:34px;height:34px;border-radius:50%;border:3px solid transparent;cursor:pointer}.sws .on{border-color:var(--ink)}
+.ov{position:fixed;inset:0;background:rgba(4,6,16,.6);backdrop-filter:blur(4px);display:none;z-index:60}.ov.on{display:block}
+.mod{position:fixed;top:14vh;left:50%;transform:translateX(-50%);width:min(520px,92vw);background:var(--sf);border:1px solid var(--ln);border-radius:20px;padding:20px;z-index:70;display:none;box-shadow:0 30px 80px rgba(0,0,0,.5)}.mod.on{display:block}
+.cmd a{display:flex;gap:12px;padding:10px 12px;border-radius:10px;cursor:pointer}.cmd a:hover,.cmd a.f{background:var(--pri);color:#fff}
+.dr{position:fixed;top:0;bottom:0;left:0;width:min(400px,100vw);background:var(--sf);border-right:1px solid var(--ln);z-index:70;padding:24px;transform:translateX(-100%);transition:.3s;overflow:auto}.dr.on{transform:none}
+.dr dl{display:grid;grid-template-columns:auto 1fr;gap:8px 20px;margin:16px 0}.dr dt{color:var(--mut)}
+#toast{position:fixed;bottom:24px;right:50%;transform:translate(50%,20px);background:var(--ink);color:var(--bg);padding:12px 22px;border-radius:14px;font-weight:700;opacity:0;transition:.25s;pointer-events:none;z-index:90}#toast.on{opacity:1;transform:translate(50%,0)}
+#lg{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;background:radial-gradient(50rem 30rem at 80% 0,color-mix(in srgb,var(--pri) 45%,transparent),transparent),radial-gradient(40rem 25rem at 0 100%,color-mix(in srgb,var(--mint) 25%,transparent),transparent),var(--bg)}#lg.off{display:none}
+.lbox{width:min(420px,100%);background:var(--gl);backdrop-filter:blur(16px);border:1px solid var(--ln);border-radius:24px;padding:30px;box-shadow:0 30px 80px rgba(0,0,0,.4)}.lbox h2{font-weight:900;margin-bottom:2px}.lbox label{display:grid;gap:4px;font-weight:500}
+.chat{display:grid;grid-template-columns:280px 1fr;gap:0;padding:0;overflow:hidden;height:540px}.cl{border-left:1px solid var(--ln);overflow:auto}.cl>div{display:flex;gap:10px;padding:14px;cursor:pointer;border-bottom:1px solid var(--ln)}.cl>div:hover,.cl>.on{background:var(--sf2)}.cl small{color:var(--mut);display:block}.cl .av{width:40px;height:40px;flex:none}
+.cb{display:flex;flex-direction:column}.cm2{flex:1;overflow:auto;padding:18px;display:flex;flex-direction:column;gap:10px}.bb{max-width:70%;padding:10px 14px;border-radius:16px;background:var(--sf2);align-self:flex-start}.bb.me2{align-self:flex-end;background:var(--pri);color:#fff}
+.cin{display:flex;gap:8px;padding:12px;border-top:1px solid var(--ln)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.cal b{text-align:center;color:var(--mut);font-weight:500}.cal div.d{min-height:84px;border:1px solid var(--ln);border-radius:12px;padding:6px 8px;background:var(--sf2);font-size:12px}.cal .e{border-color:var(--pri)}.cal .e span{display:block;margin-top:4px;background:var(--pri);color:#fff;border-radius:6px;padding:0 6px;line-height:1.5}.cal .td{box-shadow:0 0 0 2px var(--sun)}
+.stars{color:var(--sun);letter-spacing:2px}.cp{border-style:dashed}.cp code{font-size:20px;font-weight:900;color:var(--pri);letter-spacing:2px}
+@media print{aside,header,.tools,.hero{display:none}.app{display:block}}
+@media(max-width:860px){.chat{grid-template-columns:1fr;height:auto}.cl{max-height:200px;border:0}.cal div.d{min-height:56px}}
+@media(max-width:1180px){.kpis{grid-template-columns:repeat(2,1fr)}.row2,.row3{grid-template-columns:1fr}}
+@media(max-width:860px){.app{grid-template-columns:1fr}aside{position:fixed;right:0;width:268px;transform:translateX(100%);transition:.25s}aside.open{transform:none}#menu{display:block}main{padding:0 14px 40px}.kb,.me div{display:none}.kan{grid-template-columns:1fr}}
+@media(max-width:520px){.kpis{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside id="side">
+ <div class="logo"><i>✦</i><div>آرمان<small>پنل مدیریت فروش</small></div></div>
+ <nav class="nav" id="nav"></nav>
+ <div class="pro"><b>نسخه حرفه‌ای</b>گزارش‌های پیشرفته و دسترسی تیمی را فعال کنید.<button data-t="درخواست ارتقا ثبت شد">ارتقا حساب</button></div>
+</aside>
+<main>
+<header>
+ <button class="ib" id="menu" aria-label="منو">☰</button>
+ <h1 id="title">داشبورد</h1>
+ <button class="kb" id="ks">🔍 جستجو و دستورها <kbd>Ctrl K</kbd></button>
+ <button class="ib" id="th" aria-label="تغییر پوسته">🌗</button>
+ <button class="ib" id="bell" aria-label="اعلان‌ها">🔔<em></em>
+  <div class="dd" id="dd"><div><b>🛒</b><p>سفارش جدید #۱۰۴۸<small>۲ دقیقه پیش</small></p></div><div><b>⚠️</b><p>موجودی قهوه‌ساز رو به پایان است<small>۱ ساعت پیش</small></p></div><div><b>💬</b><p>پیام جدید از سارا کریمی<small>۳ ساعت پیش</small></p></div></div></button>
+ <div class="me"><div class="av">م</div><div><b>مریم احمدی</b><small>مدیر کل</small></div></div>
+</header>
+
+<section class="page on" id="dash">
+ <div class="hero"><div><h2>سلام مریم، امروز عالی شروع کردی 👋</h2><p>فروش امروز نسبت به دیروز ۱۲٪ رشد داشته و ۲۴ سفارش منتظر بررسی است.</p></div>
+  <div class="bt"><button class="btn w" data-go="orders">بررسی سفارش‌ها</button><button class="btn g" id="exp0">دریافت گزارش</button></div></div>
+ <div class="grid kpis" id="kpis"></div>
+ <div class="grid row2">
+  <div class="card"><div class="hd"><div><h3>درآمد و هزینه</h3><div class="lgd"><span><i style="background:var(--pri)"></i>درآمد</span><span><i style="background:var(--mint)"></i>سود</span></div></div>
+   <div class="seg" id="rg"><button class="on" data-r="w">هفته</button><button data-r="m">ماه</button><button data-r="y">سال</button></div></div>
+   <div class="chw"><svg id="ch" viewBox="0 0 700 270" width="100%" role="img" aria-label="نمودار درآمد"></svg><div id="tip"></div></div></div>
+  <div class="card"><div class="hd"><h3>هدف فروش ماه</h3></div><div class="ring" style="background:conic-gradient(var(--pri) 0 78%,var(--sf2) 0)"><div>۷۸٪<small>از ۵۰۰ میلیون</small></div></div>
+   <div class="pb"><p><span>لوازم دیجیتال</span><b>۴۲٪</b></p><div><i style="width:42%"></i></div></div>
+   <div class="pb"><p><span>پوشاک</span><b>۲۶٪</b></p><div><i style="width:26%"></i></div></div>
+   <div class="pb"><p><span>خانه و آشپزخانه</span><b>۱۹٪</b></p><div><i style="width:19%"></i></div></div></div>
+ </div>
+ <div class="grid row2" style="grid-template-columns:1.8fr 1fr">
+  <div class="card"><div class="hd"><h3>آخرین سفارش‌ها</h3><button class="btn o" data-go="orders">مشاهده همه</button></div><div class="tw"><table><thead><tr><th>کد</th><th>مشتری</th><th>مبلغ (تومان)</th><th>وضعیت</th></tr></thead><tbody id="rec"></tbody></table></div></div>
+  <div class="card"><div class="hd"><h3>فعالیت‌های اخیر</h3></div><div class="tl" id="tl"></div></div>
+ </div>
+</section>
+
+<section class="page" id="orders"><div class="card">
+ <div class="hd"><h3>مدیریت سفارش‌ها</h3><div class="tools"><input class="in" id="q" placeholder="جستجوی مشتری یا کد…" aria-label="جستجو"><select id="f" aria-label="وضعیت"><option value="">همه وضعیت‌ها</option><option>تکمیل‌شده</option><option>در انتظار</option><option>ارسال‌شده</option><option>لغوشده</option></select><button class="btn o" id="csv">خروجی CSV</button><button class="btn" id="add">+ سفارش جدید</button></div></div>
+ <div class="tw"><table><thead><tr><th data-k="0">کد ↕</th><th data-k="1">مشتری ↕</th><th data-k="2">تاریخ ↕</th><th data-k="3">مبلغ (تومان) ↕</th><th data-k="4">وضعیت ↕</th></tr></thead><tbody id="ot"></tbody></table></div>
+ <div class="pager"><span id="pi"></span><div id="pg"></div></div></div></section>
+
+<section class="page" id="cust"><div class="grid cg" id="cg"></div></section>
+<section class="page" id="prod"><div class="grid cg" id="pd"></div></section>
+<section class="page" id="task"><div class="grid kan" id="kn"></div></section>
+
+<section class="page" id="ana"></section>
+<section class="page" id="inv"></section>
+<section class="page" id="cpn"></section>
+<section class="page" id="msg"></section>
+<section class="page" id="rev"></section>
+<section class="page" id="cal"></section>
+<section class="page" id="team"></section>
+<section class="page" id="set"><div class="card set"><h3 style="margin-bottom:16px">تنظیمات</h3>
+ <label>نام فروشگاه<input class="in" value="فروشگاه آرمان"></label>
+ <label>ایمیل پشتیبانی<input class="in" dir="ltr" value="support@arman.ir"></label>
+ <div class="rw"><span>رنگ اصلی پنل</span><div class="sws" id="sws"></div></div>
+ <div class="rw"><span>اعلان سفارش جدید</span><input type="checkbox" class="sw" checked></div>
+ <div class="rw"><span>گزارش هفتگی با ایمیل</span><input type="checkbox" class="sw"></div>
+ <div class="rw"><span>پوسته تیره</span><input type="checkbox" class="sw" id="dk" checked></div>
+ <button class="btn" style="margin-top:18px" data-t="تغییرات ذخیره شد">ذخیره تغییرات</button></div></section>
+</main></div>
+
+<div id="lg"><div class="lbox"><div class="logo" style="justify-content:center"><i>✦</i><div>آرمان<small>پنل مدیریت فروش</small></div></div>
+ <h2>ورود به پنل مدیریت</h2><p style="color:var(--mut);margin-bottom:16px">برای ادامه اطلاعات حساب خود را وارد کنید.</p>
+ <label>ایمیل<input class="in" dir="ltr" value="admin@arman.ir"></label><br>
+ <label>رمز عبور<input class="in" dir="ltr" type="password" value="12345678"></label>
+ <div class="rw" style="border:0"><span>مرا به خاطر بسپار</span><input type="checkbox" class="sw" checked></div>
+ <button class="btn" id="lgb" style="width:100%;padding:12px">ورود به پنل</button></div></div>
+<div class="ov" id="ov"></div>
+<div class="mod cmd" id="cm"><input class="in" id="ci" placeholder="به کجا برویم یا چه کاری انجام دهیم؟" aria-label="دستور"><div id="cl" style="margin-top:10px"></div></div>
+<div class="mod" id="nm"><h3 style="margin-bottom:14px">ثبت سفارش جدید</h3>
+ <label>نام مشتری<input class="in" id="nn" placeholder="مثلاً رضا محمدی"></label><br>
+ <label>مبلغ (تومان)<input class="in" id="na" type="number" min="0" placeholder="1500000"></label><br>
+ <div style="display:flex;gap:8px"><button class="btn" id="ns">ثبت سفارش</button><button class="btn o" data-x>انصراف</button></div></div>
+<div class="dr" id="dr"></div>
+<div id="toast" role="status"></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const fa=n=>Number(n).toLocaleString('fa-IR');
+const G1='منوی اصلی',G2='فروش و بازاریابی',G3='ارتباطات',G4='مدیریت';
+const P=[['dash','▦','داشبورد','',G1],['ana','📈','تحلیل و گزارش‌ها','',G1],['orders','🧾','سفارش‌ها','۲۴',G2],['prod','📦','محصولات','',G2],['cust','👥','مشتریان','',G2],['inv','💳','فاکتورها','',G2],['cpn','🏷️','کدهای تخفیف','',G2],['msg','💬','پیام‌ها','۳',G3],['rev','⭐','نظرات','',G3],['cal','📅','تقویم','',G3],['task','✅','وظایف','',G4],['team','🛡️','تیم و دسترسی‌ها','',G4],['set','⚙️','تنظیمات','',G4]];
+const ST=['تکمیل‌شده','در انتظار','ارسال‌شده','لغوشده'],SC=['s1','s2','s4','s3'];
+const tag=i=>`<span class="tag ${SC[i]}">${ST[i]}</span>`;
+const names=['علی رضایی','سارا کریمی','حسین موسوی','نگار صادقی','امیر نوری','لیلا حیدری','پویا کاظمی','مینا یزدی','کیان فرهادی','الهام رحیمی','داریوش قاسمی','نازنین تهرانی'];
+let seed=7;const rnd=()=>(seed=seed*16807%2147483647)/2147483647;
+let orders=names.map((n,i)=>[fa(1047-i),n,'۱۴۰۵/۰۷/'+fa(10-Math.floor(i/2)).padStart(2,'۰'),Math.round(rnd()*50+3)*100000,Math.floor(rnd()*4)]);
+$('#nav').innerHTML=P.map((p,i)=>(i&&P[i-1][4]==p[4]?'':`<div class="grp">${p[4]}</div>`)+`<a data-p="${p[0]}"><b>${p[1]}</b>${p[2]}${p[3]?`<em>${p[3]}</em>`:''}</a>`).join('');
+const spark=(c,d)=>{const m=Math.max(...d);return`<svg viewBox="0 0 100 40" preserveAspectRatio="none"><path d="${d.map((v,i)=>(i?'L':'M')+(100-i*100/(d.length-1))+' '+(36-v/m*32)).join(' ')}" fill="none" stroke="${c}" stroke-width="2.5" stroke-linecap="round"/></svg>`};
+const K=[['فروش امروز','۱۸٬۴۵۰٬۰۰۰','+۱۲٪',1,'var(--pri)',[3,5,4,7,6,9,8]],['سفارش‌ها','۳۲۴','+۸٪',1,'var(--sun)',[4,3,6,5,7,6,9]],['مشتریان جدید','۸۷','+۲۳٪',1,'var(--mint)',[2,4,3,6,5,8,9]],['مرجوعی','۶','−۳٪',0,'var(--cor)',[8,7,8,5,6,4,3]]];
+$('#kpis').innerHTML=K.map(k=>`<div class="card kpi"><span>${k[0]}</span><strong>${k[1]}</strong><small class="${k[3]?'up':'dn'}">${k[2]} نسبت به دوره قبل</small>${spark(k[4],k[5])}</div>`).join('');
+const rec=()=>$('#rec').innerHTML=orders.slice(0,5).map(o=>`<tr tabindex="0" data-o="${o[0]}"><td>#${o[0]}</td><td>${o[1]}</td><td>${fa(o[3])}</td><td>${tag(o[4])}</td></tr>`).join('');
+$('#tl').innerHTML=[['🛒','سفارش #۱۰۴۸ ثبت شد','۲ دقیقه پیش'],['💳','پرداخت ۴٫۲ میلیون تأیید شد','۴۰ دقیقه پیش'],['👤','۵ مشتری جدید عضو شدند','۲ ساعت پیش'],['📦','محصول «قهوه‌ساز» کم‌موجود شد','دیروز']].map(a=>`<div><i>${a[0]}</i><p>${a[1]}<small>${a[2]}</small></p></div>`).join('');
+const D={w:[['ش',42,18],['ی',58,26],['د',51,20],['س',74,34],['چ',66,30],['پ',88,41],['ج',79,37]],m:[['هفته ۱',210,90],['هفته ۲',265,120],['هفته ۳',240,105],['هفته ۴',320,150]],y:[['فر',120,50],['ار',150,64],['خر',140,58],['تی',190,88],['مر',210,95],['شه',180,76],['مه',240,112],['آب',260,126],['آذ',230,104],['دی',280,140],['به',300,150],['اس',340,170]]};
+function chart(k){const d=D[k],W=700,H=270,p=36,mx=Math.max(...d.map(x=>x[1]))*1.15,X=i=>W-p-i*(W-2*p)/(d.length-1),Y=v=>H-p-v/mx*(H-2*p);
+ const path=j=>d.map((x,i)=>(i?'L':'M')+X(i)+' '+Y(x[j])).join(' '),area=j=>path(j)+`L${X(d.length-1)} ${H-p}L${X(0)} ${H-p}Z`;
+ let g='';for(let i=0;i<=4;i++){const y=14+i*(H-p-14)/4;g+=`<line x1="${p}" x2="${W-p}" y1="${y}" y2="${y}" stroke="var(--ln)" stroke-dasharray="4 5"/>`}
+ $('#ch').innerHTML=`<defs><linearGradient id="a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c6cff" stop-opacity=".45"/><stop offset="1" stop-color="#7c6cff" stop-opacity="0"/></linearGradient><linearGradient id="b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2ee6a6" stop-opacity=".3"/><stop offset="1" stop-color="#2ee6a6" stop-opacity="0"/></linearGradient></defs>${g}
+ <path d="${area(1)}" fill="url(#a)"/><path d="${area(2)}" fill="url(#b)"/>
+ <path d="${path(1)}" fill="none" stroke="var(--pri)" stroke-width="3.5" stroke-linejoin="round"/><path d="${path(2)}" fill="none" stroke="var(--mint)" stroke-width="3.5" stroke-linejoin="round"/>
+ ${d.map((x,i)=>`<text x="${X(i)}" y="${H-10}" text-anchor="middle">${x[0]}</text>`).join('')}<line id="vl" y1="14" y2="${H-p}" stroke="var(--mut)" opacity="0"/>`;
+ const s=$('#ch');s.onmousemove=e=>{const r=s.getBoundingClientRect(),x=(e.clientX-r.left)/r.width*W;let i=Math.round((W-p-x)*(d.length-1)/(W-2*p));i=Math.max(0,Math.min(d.length-1,i));
+  const v=$('#vl');v.setAttribute('x1',X(i));v.setAttribute('x2',X(i));v.setAttribute('opacity',.5);const t=$('#tip');t.style.opacity=1;t.style.top='10px';t.style.left=Math.max(0,X(i)/W*r.width-130)+'px';t.innerHTML=`<b>${d[i][0]}</b> — درآمد: ${fa(d[i][1])} م | سود: ${fa(d[i][2])} م`};
+ s.onmouseleave=()=>{$('#tip').style.opacity=0;$('#vl').setAttribute('opacity',0)}}
+chart('w');
+$('#rg').onclick=e=>{const b=e.target.closest('button');if(!b)return;$$('#rg button').forEach(x=>x.classList.toggle('on',x===b));chart(b.dataset.r)};
+let S={q:'',f:'',k:0,d:1,p:1};const N=6;
+function ro(){let l=orders.filter(o=>(!S.q||o[1].includes(S.q)||o[0].includes(S.q))&&(!S.f||ST[o[4]]===S.f));
+ l.sort((a,b)=>(a[S.k]>b[S.k]?1:a[S.k]<b[S.k]?-1:0)*S.d);const pc=Math.max(1,Math.ceil(l.length/N));S.p=Math.min(S.p,pc);
+ $('#ot').innerHTML=l.slice((S.p-1)*N,S.p*N).map(o=>`<tr tabindex="0" data-o="${o[0]}"><td>#${o[0]}</td><td><b>${o[1]}</b></td><td>${o[2]}</td><td>${fa(o[3])}</td><td>${tag(o[4])}</td></tr>`).join('')||'<tr><td colspan="5" style="text-align:center;color:var(--mut)">سفارشی پیدا نشد. فیلتر یا عبارت جستجو را تغییر دهید.</td></tr>';
+ $('#pi').textContent=`${fa(l.length)} سفارش`;$('#pg').innerHTML=Array.from({length:pc},(_,i)=>`<button class="${i+1==S.p?'on':''}" data-pg="${i+1}">${fa(i+1)}</button>`).join('');rec();inv()}
+$('#q').oninput=e=>{S.q=e.target.value.trim();S.p=1;ro()};$('#f').onchange=e=>{S.f=e.target.value;S.p=1;ro()};
+$('#pg').onclick=e=>{if(e.target.dataset.pg){S.p=+e.target.dataset.pg;ro()}};
+$$('th[data-k]').forEach(t=>t.onclick=()=>{const k=+t.dataset.k;S.d=S.k==k?-S.d:1;S.k=k;ro()});
+$('#csv').onclick=()=>{const c='\uFEFFکد,مشتری,تاریخ,مبلغ,وضعیت\n'+orders.map(o=>[o[0],o[1],o[2],o[3],ST[o[4]]].join(',')).join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:'text/csv'}));a.download='orders.csv';a.click();toast('فایل CSV دانلود شد')};
+$('#exp0').onclick=()=>$('#csv').click();
+function drawer(id){const o=orders.find(x=>x[0]==id);if(!o)return;$('#dr').innerHTML=`<div class="hd"><h3>سفارش #${o[0]}</h3><button class="btn o" data-x>بستن</button></div>${tag(o[4])}<dl><dt>مشتری</dt><dd>${o[1]}</dd><dt>تاریخ</dt><dd>${o[2]}</dd><dt>مبلغ</dt><dd>${fa(o[3])} تومان</dd><dt>پرداخت</dt><dd>درگاه آنلاین</dd></dl><p style="color:var(--mut);margin-bottom:8px">تغییر وضعیت سفارش:</p><div class="tools">${ST.map((s,i)=>`<button class="btn ${i==o[4]?'':'o'}" data-st="${o[0]}:${i}">${s}</button>`).join('')}</div>`;show('dr')}
+document.addEventListener('click',e=>{const t=e.target,r=t.closest('[data-o]'),st=t.dataset.st;
+ if(st){const[a,b]=st.split(':');orders.find(x=>x[0]==a)[4]=+b;ro();drawer(a);toast('وضعیت سفارش به‌روزرسانی شد')}
+ else if(r)drawer(r.dataset.o);
+ if(t.closest('[data-x]')||t.id=='ov')closeAll();
+ const gt=t.closest('[data-go]');if(gt)go(gt.dataset.go);
+ const tt=t.closest('[data-t]');if(tt)toast(tt.dataset.t);
+ if(!t.closest('#bell'))$('#dd').classList.remove('on')});
+function show(id){$('#ov').classList.add('on');$('#'+id).classList.add('on')}
+function closeAll(){$$('.on.mod,.on.dr,#ov.on').forEach(x=>x.classList.remove('on'))}
+$('#add').onclick=()=>{show('nm');$('#nn').focus()};
+$('#ns').onclick=()=>{const n=$('#nn').value.trim(),a=+$('#na').value;if(!n||!a){toast('نام مشتری و مبلغ را وارد کنید');return}
+ orders.unshift([fa(1048+orders.length-12),n,'۱۴۰۵/۰۷/۱۰',a,1]);$('#nn').value=$('#na').value='';closeAll();ro();toast('سفارش جدید ثبت شد')};
+const initials=n=>n[0];const cols=['var(--pri)','var(--mint)','var(--sun)','var(--cor)'];
+$('#cg').innerHTML=names.slice(0,8).map((n,i)=>{const c=orders[i];return`<div class="card cc"><div class="av" style="background:${cols[i%4]}">${initials(n)}</div><b>${n}</b><p>${['تهران','اصفهان','مشهد','شیراز','تبریز','رشت','یزد','کرج'][i]}</p><dl><div><dt>${fa(3+i*2)}</dt><dd>سفارش</dd></div><div><dt>${fa(Math.round(c[3]/100000*2)/10)} م</dt><dd>خرید</dd></div></dl></div>`}).join('');
+$('#pd').innerHTML=[['هدفون بی‌سیم','🎧',2450000,34],['ساعت هوشمند','⌚',5120000,12],['کیف چرمی','👜',1760000,28],['قهوه‌ساز','☕',4200000,7],['کفش ورزشی','👟',2100000,56],['لامپ هوشمند','💡',320000,120]].map((p,i)=>`<div class="card"><div class="pimg" style="background:color-mix(in srgb,${cols[i%4]} 20%,transparent)">${p[1]}</div><b>${p[0]}</b><p style="color:var(--mut)">${fa(p[2])} تومان</p><div class="pb"><p><small>موجودی</small><small>${fa(p[3])}</small></p><div><i style="width:${Math.min(100,p[3])}%;${p[3]<15?'background:var(--cor)':''}"></i></div></div></div>`).join('');
+let T=[[0,'طراحی بنر پاییزه'],[0,'پاسخ به پیام مشتریان'],[1,'بررسی موجودی انبار'],[1,'هماهنگی ارسال پست'],[2,'به‌روزرسانی قیمت‌ها']];
+const KN=['برای انجام','در حال انجام','انجام‌شده'];
+function tk(){$('#kn').innerHTML=KN.map((n,c)=>`<div class="card"><h4>${n} (${fa(T.filter(t=>t[0]==c).length)})</h4>${T.map((t,i)=>t[0]==c?`<div class="tk"><span>${t[1]}</span>${c<2?`<button data-mv="${i}" aria-label="انتقال">←</button>`:''}</div>`:'').join('')}</div>`).join('')}
+$('#kn').onclick=e=>{const i=e.target.dataset.mv;if(i!=null){T[i][0]++;tk();toast('وظیفه منتقل شد')}};tk();
+const AC=['#7c6cff','#2ee6a6','#ff6b81','#ffc24b','#38bdf8'];
+$('#sws').innerHTML=AC.map((c,i)=>`<button style="background:${c}" class="${i?'':'on'}" data-c="${c}" aria-label="رنگ ${i+1}"></button>`).join('');
+$('#sws').onclick=e=>{const c=e.target.dataset.c;if(!c)return;document.documentElement.style.setProperty('--pri',c);$$('#sws button').forEach(b=>b.classList.toggle('on',b==e.target));chart($('#rg .on').dataset.r)};
+function go(p){$$('.page').forEach(s=>s.classList.toggle('on',s.id==p));$$('.nav a').forEach(a=>a.classList.toggle('on',a.dataset.p==p));$('#title').textContent=P.find(x=>x[0]==p)[2];$('#side').classList.remove('open');closeAll();scrollTo(0,0)}
+$('#nav').onclick=e=>{const a=e.target.closest('a');if(a)go(a.dataset.p)};
+function th(d){document.documentElement.dataset.theme=d?'dark':'light';$('#dk').checked=d}
+$('#th').onclick=()=>th(document.documentElement.dataset.theme!='dark');$('#dk').onchange=e=>th(e.target.checked);
+$('#menu').onclick=()=>$('#side').classList.toggle('open');
+$('#bell').onclick=e=>{if(!e.target.closest('.dd'))$('#dd').classList.toggle('on')};
+function toast(t){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(e.t);e.t=setTimeout(()=>e.classList.remove('on'),2200)}
+const CM=[...P.map(p=>[p[1],'رفتن به '+p[2],()=>go(p[0])]),['➕','ثبت سفارش جدید',()=>{closeAll();show('nm')}],['🌗','تغییر پوسته',()=>$('#th').click()],['⬇️','دریافت خروجی CSV',()=>$('#csv').click()]];
+let cf=0;function cl(){const q=$('#ci').value.trim(),l=CM.filter(c=>c[1].includes(q));cf=Math.min(cf,Math.max(0,l.length-1));$('#cl').innerHTML=l.map((c,i)=>`<a class="${i==cf?'f':''}" data-i="${CM.indexOf(c)}"><b>${c[0]}</b>${c[1]}</a>`).join('')||'<p style="padding:10px;color:var(--mut)">دستوری پیدا نشد.</p>';return l}
+function opn(){closeAll();show('cm');$('#ci').value='';cf=0;cl();$('#ci').focus()}
+$('#ks').onclick=opn;$('#ci').oninput=cl;
+$('#cl').onclick=e=>{const a=e.target.closest('a');if(a){closeAll();CM[a.dataset.i][2]()}};
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()=='k'){e.preventDefault();opn()}
+ if(e.key=='Escape')closeAll();
+ if($('#cm').classList.contains('on')){const l=cl();if(e.key=='ArrowDown'){cf=(cf+1)%l.length;cl()}if(e.key=='ArrowUp'){cf=(cf-1+l.length)%l.length;cl()}if(e.key=='Enter'&&l[cf]){closeAll();l[cf][2]()}}});
+/* تحلیل */
+$('#ana').innerHTML=`<div class="grid kpis">${[['بازدیدکنندگان','۴۸٬۲۱۰','+۱۸٪'],['نرخ تبدیل','۳٫۴٪','+۰٫۶٪'],['میانگین سبد خرید','۲٬۱۸۰٬۰۰۰','+۴٪'],['نرخ خروج','۳۸٪','−۲٪']].map(k=>`<div class="card kpi"><span>${k[0]}</span><strong>${k[1]}</strong><small class="up">${k[2]} نسبت به ماه قبل</small></div>`).join('')}</div>
+<div class="grid row2"><div class="card"><div class="hd"><h3>بازدید ماهانه</h3><button class="btn o" id="exp1">دریافت گزارش</button></div><svg id="bc" viewBox="0 0 700 240" width="100%" role="img" aria-label="نمودار بازدید"></svg></div>
+<div class="card"><div class="hd"><h3>منابع ترافیک</h3></div>${[['جستجوی گوگل',46],['اینستاگرام',24],['ورود مستقیم',18],['تلگرام',12]].map(s=>`<div class="pb"><p><span>${s[0]}</span><b>${fa(s[1])}٪</b></p><div><i style="width:${s[1]}%"></i></div></div>`).join('')}</div></div>
+<div class="card" style="margin-top:16px"><div class="hd"><h3>پربازدیدترین صفحه‌ها</h3></div><div class="tw"><table><thead><tr><th>صفحه</th><th>بازدید</th><th>نرخ تبدیل</th></tr></thead><tbody>${[['صفحه اصلی','۱۸٬۴۰۰','۲٫۱٪'],['هدفون بی‌سیم','۹٬۲۰۰','۵٫۸٪'],['ساعت هوشمند','۷٬۱۰۰','۴٫۲٪'],['سبد خرید','۵٬۳۰۰','۳۱٪']].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}</tbody></table></div></div>`;
+{const v=[22,30,27,38,35,44,41,52,48,60,57,70],m=Math.max(...v),w=700/12;$('#bc').innerHTML=v.map((x,i)=>`<rect x="${700-(i+1)*w+8}" y="${210-x/m*190}" width="${w-16}" height="${x/m*190}" rx="8" fill="${i==11?'var(--mint)':'var(--pri)'}" opacity="${.45+i*.05}"><title>${fa(x)} هزار بازدید</title></rect>`).join('')}
+$('#exp1').onclick=()=>toast('گزارش تحلیلی آماده دانلود شد');
+/* فاکتورها */
+function inv(){$('#inv').innerHTML=`<div class="card"><div class="hd"><h3>فاکتورها</h3><button class="btn" onclick="print()">چاپ فهرست</button></div><div class="tw"><table><thead><tr><th>شماره فاکتور</th><th>مشتری</th><th>مبلغ (تومان)</th><th>سررسید</th><th>وضعیت</th></tr></thead><tbody>${orders.slice(0,10).map((o,i)=>`<tr><td>INV-${fa(2000+i)}</td><td>${o[1]}</td><td>${fa(o[3])}</td><td>۱۴۰۵/۰۸/${fa(i+5).padStart(2,'۰')}</td><td>${o[4]==3?'<span class="tag s3">باطل</span>':o[4]==1?'<span class="tag s2">پرداخت‌نشده</span>':'<span class="tag s1">پرداخت‌شده</span>'}</td></tr>`).join('')}</tbody></table></div></div>`}inv();
+/* تخفیف */
+const CP=[['MEHR20','۲۰٪ تخفیف مهرماه',142,200,1],['FREESHIP','ارسال رایگان',88,100,1],['VIP30','۳۰٪ ویژه مشتریان طلایی',19,50,0],['NEW10','۱۰٪ خرید اول',301,500,1]];
+$('#cpn').innerHTML=`<div class="hd"><h3>کدهای تخفیف</h3><button class="btn" data-t="کد تخفیف جدید ساخته شد">+ ساخت کد جدید</button></div><div class="grid cg">${CP.map(c=>`<div class="card cp"><code>${c[0]}</code><p style="color:var(--mut)">${c[1]}</p><div class="pb"><p><small>استفاده‌شده</small><small>${fa(c[2])} از ${fa(c[3])}</small></p><div><i style="width:${c[2]/c[3]*100}%"></i></div></div><div class="rw" style="border:0;padding:0"><span>فعال</span><input type="checkbox" class="sw" ${c[4]?'checked':''}></div></div>`).join('')}</div>`;
+/* پیام‌ها */
+const CH=[['سارا کریمی','سلام، سفارشم کی ارسال می‌شه؟'],['حسین موسوی','ممنون از ارسال سریع 🙏'],['نگار صادقی','امکان تعویض سایز هست؟']];let ca=0;const hist=CH.map(c=>[['a',c[1]]]);
+function msg(){$('#msg').innerHTML=`<div class="card chat"><div class="cl">${CH.map((c,i)=>`<div class="${i==ca?'on':''}" data-ch="${i}"><div class="av" style="background:${cols[i]}">${c[0][0]}</div><p><b>${c[0]}</b><small>${hist[i][hist[i].length-1][1]}</small></p></div>`).join('')}</div><div class="cb"><div class="cm2" id="cm2">${hist[ca].map(m=>`<div class="bb ${m[0]=='b'?'me2':''}">${m[1]}</div>`).join('')}</div><div class="cin"><input class="in" id="mi" placeholder="پیام خود را بنویسید…" aria-label="پیام"><button class="btn" id="ms">ارسال</button></div></div></div>`;const c=$('#cm2');c.scrollTop=c.scrollHeight}
+msg();
+$('#msg').onclick=e=>{const d=e.target.closest('[data-ch]');if(d){ca=+d.dataset.ch;msg()}if(e.target.id=='ms')sm()};
+$('#msg').onkeydown=e=>{if(e.key=='Enter'&&e.target.id=='mi')sm()};
+function sm(){const v=$('#mi').value.trim();if(!v)return;hist[ca].push(['b',v]);msg();$('#mi').focus()}
+/* نظرات */
+$('#rev').innerHTML=`<div class="grid cg">${[['علی رضایی','هدفون بی‌سیم',5,'کیفیت صدا فوق‌العاده بود و بسته‌بندی عالی.'],['مینا یزدی','کیف چرمی',4,'جنس خوب است، فقط رنگش کمی تیره‌تر از عکس بود.'],['کیان فرهادی','قهوه‌ساز',3,'خوب کار می‌کند اما سروصدای زیادی دارد.'],['الهام رحیمی','ساعت هوشمند',5,'باتری چند روز دوام می‌آورد. پیشنهاد می‌کنم.']].map((r,i)=>`<div class="card"><div class="hd" style="margin:0"><b>${r[0]}</b><span class="stars">${'★'.repeat(r[2])}${'☆'.repeat(5-r[2])}</span></div><small style="color:var(--mut)">${r[1]}</small><p style="margin:10px 0">${r[3]}</p><button class="btn o" data-t="پاسخ شما ثبت شد">پاسخ دادن</button></div>`).join('')}</div>`;
+/* تقویم */
+{const EV={3:'جلسه تیم',8:'شروع کمپین مهر',14:'ارسال محموله',21:'جلسه تأمین‌کننده',27:'پایان تخفیف'};let h='<div class="card"><div class="hd"><h3>مهر ۱۴۰۵</h3></div><div class="cal">'+['ش','ی','د','س','چ','پ','ج'].map(d=>`<b>${d}</b>`).join('')+'<div></div>'.repeat(4);
+for(let d=1;d<=30;d++)h+=`<div class="d ${EV[d]?'e':''} ${d==10?'td':''}">${fa(d)}${EV[d]?`<span>${EV[d]}</span>`:''}</div>`;$('#cal').innerHTML=h+'</div></div>'}
+/* تیم */
+const TM=[['مریم احمدی','مدیر کل','maryam@arman.ir',1],['رضا محمدی','مدیر محتوا','reza@arman.ir',1],['نازنین تهرانی','پشتیبان','nazanin@arman.ir',1],['داریوش قاسمی','حسابدار','dariush@arman.ir',0]];
+$('#team').innerHTML=`<div class="card"><div class="hd"><h3>اعضای تیم</h3><button class="btn" data-t="دعوت‌نامه ارسال شد">+ دعوت عضو</button></div><div class="tw"><table><thead><tr><th>نام</th><th>نقش</th><th>ایمیل</th><th>وضعیت</th></tr></thead><tbody>${TM.map(t=>`<tr style="cursor:default"><td><b>${t[0]}</b></td><td><select style="width:auto">${['مدیر کل','مدیر محتوا','پشتیبان','حسابدار'].map(r=>`<option ${r==t[1]?'selected':''}>${r}</option>`).join('')}</select></td><td dir="ltr" style="text-align:right">${t[2]}</td><td>${t[3]?'<span class="tag s1">فعال</span>':'<span class="tag s3">غیرفعال</span>'}</td></tr>`).join('')}</tbody></table></div></div>`;
+/* ورود */
+$('#lgb').onclick=()=>{$('#lg').classList.add('off');toast('خوش آمدید، مریم!')};
+$('.me').onclick=()=>$('#lg').classList.remove('off');$('.me').style.cursor='pointer';
+
+/* اصلاحات */
+document.addEventListener('keydown',e=>{if(e.key=='Enter'&&e.target.matches('tr[data-o]'))drawer(e.target.dataset.o);if(e.key=='Enter'&&!$('#lg').classList.contains('off')&&e.target.closest('#lg'))$('#lgb').click();if(e.key=='Escape')$('#side').classList.remove('open')});
+document.addEventListener('click',e=>{if(innerWidth<=860&&!e.target.closest('#side,#menu'))$('#side').classList.remove('open')});
+$('#cpn').addEventListener('change',e=>{if(e.target.classList.contains('sw'))toast(e.target.checked?'کد تخفیف فعال شد':'کد تخفیف غیرفعال شد')});
+$('#team').addEventListener('change',e=>{if(e.target.tagName=='SELECT')toast('نقش کاربر تغییر کرد')});
+go('dash');ro();
+</script>
+</body>
+</html>
